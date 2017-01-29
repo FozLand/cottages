@@ -247,23 +247,28 @@ minetest.register_node("cottages:anvil", {
 		local tool = string.sub( wielded:get_name(), 10 )
 		if ( tool == '' or HAMMERS[tool] == nil ) then return end
 
-		-- tell the player when the job is done
-		if(   input:get_wear() == 0 ) then
-			minetest.log( 'action', name..' repaired ' .. input:get_name() .. ' using ' .. tool )
-			minetest.chat_send_player( puncher:get_player_name(),
-				'Your tool has been repaired successfully.');
-			return;
-		end
+		-- damage the hammer
+		wielded:add_wear( HAMMERS[tool].damage );
+		--print('dmg: '..HAMMERS[tool].damage)
+		puncher:set_wielded_item( wielded );
 
 		-- do the actual repair
 		input:add_wear( HAMMERS[tool].repair );
 		--print('rep: '..HAMMERS[tool].repair)
 		inv:set_stack("input", 1, input)
 
-		-- damage the hammer
-		wielded:add_wear( HAMMERS[tool].damage );
-		--print('dmg: '..HAMMERS[tool].damage)
-		puncher:set_wielded_item( wielded );
+		-- tell the player when the job is done
+		local wear = input:get_wear()
+		if wear == 0 then
+			minetest.log( 'action', name..' repaired ' .. input:get_name() .. ' using ' .. tool )
+			minetest.chat_send_player( puncher:get_player_name(),
+				'Your tool has been repaired successfully.');
+			return;
+		elseif ( math.floor( wear/HAMMERS[tool].repair )%10 == 0 ) then
+			-- do not spam too much
+			minetest.chat_send_player( puncher:get_player_name(),
+				'Your workpiece improves.');
+		end
 
 		if ( math.random( 0,1 ) == 1 ) then
 			local v1 = puncher:get_look_dir()
@@ -276,11 +281,6 @@ minetest.register_node("cottages:anvil", {
 			spawn_particles(pp)
 		end
 
-		-- do not spam too much
-		if ( math.random( 1, 15 ) == 1 ) then
-			minetest.chat_send_player( puncher:get_player_name(),
-				'Your workpiece improves.');
-		end
 	end,
 	is_ground_content = false,
 })
