@@ -12,31 +12,31 @@ HAMMERS = {
 		desc = 'Steel', recipe = 'default:steel_ingot',
 		image = 'cottages_tool_steelhammer.png',
 		repair = -1800,
-		damage = 2600
+		damage = 720 -- 92 uses 2.5 full repairs
 		},
 	hammerbronze = {
 		desc = 'Bronze', recipe = 'default:bronze_ingot',
 		image = 'cottages_tool_bronzehammer.png',
-		repair = -1900,
-		damage = 2300
+		repair = -1920,
+		damage = 480 -- 137 uses 4 full repairs
 		},
 	hammermese = {
 		desc = 'Mese', recipe = 'default:mese_crystal',
 		image = 'cottages_tool_mesehammer.png',
-		repair = -2500,
-		damage = 1900
+		repair = -2496,
+		damage = 416 -- 158 uses 6 full repairs
 		},
 	hammerdiamond = {
 		desc = 'Diamond', recipe = 'default:diamond',
 		image = 'cottages_tool_diamondhammer.png',
-		repair = -3050,
-		damage = 1700
+		repair = -3040,
+		damage = 304 -- 216 uses 10 full repairs
 		},
 	hammerobsidian = {
 		desc = 'Obsidian', recipe = 'default:obsidian',
 		image = 'cottages_tool_obsidianhammer.png',
-		repair = -2050,
-		damage = 1200
+		repair = -2048,
+		damage = 256 -- 256 uses 8 full repairs
 		}
 	}
 
