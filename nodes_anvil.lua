@@ -1,9 +1,9 @@
----------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- simple anvil that can be used to repair tools
----------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- * can be used to repair tools
 -- * the hammer gets dammaged a bit at each repair step
----------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- spawn particles was taken from the shooter mod
 -- Boilerplate to support localized strings if intllib mod is installed.
 
@@ -68,15 +68,15 @@ for _,tool in pairs(HAMMERS) do
 	minetest.register_craft({
 		output = 'cottages:' .. _,
 		recipe = {
-			{ tool.recipe,	tool.recipe,	tool.recipe },
-			{ tool.recipe,	'group:stick',	'' },
-			{ '',			'group:stick',	'' }
-			}
+			{ tool.recipe, tool.recipe,   tool.recipe },
+			{ tool.recipe, 'group:stick', ''          },
+			{ '',          'group:stick', ''          }
+		}
 	})
 
 	minetest.register_tool('cottages:' .. _, {
-		description			= tool.desc..' hammer',
-		inventory_image		= tool.image,
+		description       = tool.desc..' hammer',
+		inventory_image   = tool.image,
 		tool_capabilities = {
 			full_punch_interval = 0.8,
 			max_drop_level=1,
@@ -95,28 +95,28 @@ minetest.register_node("cottages:anvil", {
 	description = 'Anvil',
 	tiles = {"moreblocks_coal_stone.png"},
 	paramtype  = "light",
-        paramtype2 = "facedir",
+	paramtype2 = "facedir",
 	groups = {cracky=2},
 	-- the nodebox model comes from realtest
 	node_box = {
 		type = "fixed",
 		fixed = {
-				{-0.5,-0.5,-0.3,0.5,-0.4,0.3},
-				{-0.35,-0.4,-0.25,0.35,-0.3,0.25},
-				{-0.3,-0.3,-0.15,0.3,-0.1,0.15},
-				{-0.35,-0.1,-0.2,0.35,0.1,0.2},
-			},
+			{-0.5,-0.5,-0.3,0.5,-0.4,0.3},
+			{-0.35,-0.4,-0.25,0.35,-0.3,0.25},
+			{-0.3,-0.3,-0.15,0.3,-0.1,0.15},
+			{-0.35,-0.1,-0.2,0.35,0.1,0.2},
+		},
 	},
 	selection_box = {
 		type = "fixed",
 		fixed = {
-				{-0.5,-0.5,-0.3,0.5,-0.4,0.3},
-				{-0.35,-0.4,-0.25,0.35,-0.3,0.25},
-				{-0.3,-0.3,-0.15,0.3,-0.1,0.15},
-				{-0.35,-0.1,-0.2,0.35,0.1,0.2},
-			}
+			{-0.5,-0.5,-0.3,0.5,-0.4,0.3},
+			{-0.35,-0.4,-0.25,0.35,-0.3,0.25},
+			{-0.3,-0.3,-0.15,0.3,-0.1,0.15},
+			{-0.35,-0.1,-0.2,0.35,0.1,0.2},
+		}
 	},
-	
+
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos);
 		meta:set_string("infotext", 'Anvil');
@@ -150,7 +150,6 @@ minetest.register_node("cottages:anvil", {
 	end,
 
 	can_dig = function(pos,player)
-
 		local meta  = minetest.get_meta(pos);
 		local inv   = meta:get_inventory();
 		local owner = meta:get_string('owner');
@@ -160,8 +159,8 @@ minetest.register_node("cottages:anvil", {
 			-- or not( inv:is_empty("sample"))
 			or not( inv:is_empty("hammer"))
 			or not( player )
-			or ( owner and owner ~= ''  and player:get_player_name() ~= owner )) then
-		   return false;
+			or ( owner and owner ~= '' and player:get_player_name() ~= owner )) then
+			return false;
 		end
 
 		return true;
@@ -169,30 +168,30 @@ minetest.register_node("cottages:anvil", {
 
 	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
 		local meta = minetest.get_meta(pos)
-		
+
 		if( player and player:get_player_name() ~= meta:get_string('owner' )) then
 			return 0
 		end
-		
+
 		return count;
 	end,
 
 	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
 		local meta = minetest.get_meta(pos)
+
 		if( player and player:get_player_name() ~= meta:get_string('owner' )) then
 			return 0;
 		end
-		
+
 		if( listname=='hammer' and stack and string.sub( stack:get_name(), 1, 15 ) ~= 'cottages:hammer' ) then
 			return 0;
 		end
-		
-		if( listname=='input'
-		 and( stack:get_wear() == 0
-			or stack:get_name() == 'technic:water_can' 
-			or stack:get_name() == 'technic:lava_can'
-			or string.sub(stack:get_name(), 1, 8) == 'shooter:' )) then
 
+		if( listname=='input'
+		  and (stack:get_wear() == 0
+			  or stack:get_name() == 'technic:water_can'
+			  or stack:get_name() == 'technic:lava_can'
+			  or string.sub(stack:get_name(), 1, 8) == 'shooter:' )) then
 			minetest.chat_send_player( player:get_player_name(), 'The workpiece slot is for damaged tools only.');
 			return 0;
 		end
@@ -201,12 +200,11 @@ minetest.register_node("cottages:anvil", {
 
 	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
 		local meta = minetest.get_meta(pos)
-                if( player and player:get_player_name() ~= meta:get_string('owner' )) then
-                        return 0
+		if( player and player:get_player_name() ~= meta:get_string('owner' )) then
+			return 0
 		end
 		return stack:get_count()
 	end,
-
 
 	on_punch = function(pos, node, puncher)
 		if( not( pos ) or not( node ) or not( puncher )) then
@@ -216,15 +214,13 @@ minetest.register_node("cottages:anvil", {
 		-- only punching with the hammer is supposed to work
 		local wielded = puncher:get_wielded_item();
 		if( not( wielded ) or not( wielded:get_name() )
-			or string.sub( wielded:get_name(), 1, 15 ) ~= 'cottages:hammer' ) then
- 			return
+		  or string.sub( wielded:get_name(), 1, 15 ) ~= 'cottages:hammer' ) then
+			return
 		end
-		
-		local name = puncher:get_player_name()
 
+		local name = puncher:get_player_name()
 		local meta = minetest.env:get_meta(pos)
 		local inv  = meta:get_inventory()
-
 		local input = inv:get_stack('input',1);
 
 		-- no input
@@ -233,16 +229,15 @@ minetest.register_node("cottages:anvil", {
 		-- only tools can be repaired
 		local input_name = input:get_name()
 		if ( input_name == 'technic:water_can'
-				or input_name == 'technic:lava_can'
-				or input_name == 'utechnic:chainsaw'
-				or string.sub( input_name, 1, 15 ) == 'cottages:hammer'
-				or input_name == 'fake_fire:flint_and_steel'
-				or string.sub( input_name, 1, 8 ) == 'shooter:' )
-		then
+		  or input_name == 'technic:lava_can'
+		  or input_name == 'utechnic:chainsaw'
+		  or string.sub( input_name, 1, 15 ) == 'cottages:hammer'
+		  or input_name == 'fake_fire:flint_and_steel'
+		  or string.sub( input_name, 1, 8 ) == 'shooter:' ) then
 			minetest.chat_send_player( name, 'The workpiece slot is for damaged tools only.');
 			return
 		end
-		
+
 		-- recognize hammer type
 		local tool = string.sub( wielded:get_name(), 10 )
 		if ( tool == '' or HAMMERS[tool] == nil ) then return end
@@ -287,32 +282,31 @@ minetest.register_node("cottages:anvil", {
 
 
 
----------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- crafting receipes
----------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 minetest.register_craft({
 	output = 'cottages:anvil',
 	recipe = {
 		{'default:steel_ingot','default:steel_ingot','default:steel_ingot'},
 		{'',                   'default:steel_ingot',''                   },
-		{'default:steel_ingot','default:steel_ingot','default:steel_ingot'} },
+		{'default:steel_ingot','default:steel_ingot','default:steel_ingot'},
+	},
 })
 
 -- the castle-mod has an anvil as well - with the same receipe. convert the two into each other
 if ( minetest.get_modpath('castle') ~= nil ) then
-
-  minetest.register_craft({
-	output = 'cottages:anvil',
-	recipe = {
-		 {'castle:anvil'},
+	minetest.register_craft({
+		output = 'cottages:anvil',
+		recipe = {
+			{'castle:anvil'},
 		},
-  }) 
+	})
 
-  minetest.register_craft({
-	output = 'castle:anvil',
-	recipe = {
-		 {'cottages:anvil'},
+	minetest.register_craft({
+		output = 'castle:anvil',
+		recipe = {
+			{'cottages:anvil'},
 		},
-  }) 
+	})
 end
-
