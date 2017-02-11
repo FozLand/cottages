@@ -90,16 +90,16 @@ for _,tool in pairs(HAMMERS) do
 end
 minetest.register_alias('cottages:hammer', 'cottages:hammersteel')
 
-minetest.register_node("cottages:anvil", {
-	drawtype = "nodebox",
+minetest.register_node('cottages:anvil', {
+	drawtype = 'nodebox',
 	description = 'Anvil',
-	tiles = {"moreblocks_coal_stone.png"},
-	paramtype  = "light",
-	paramtype2 = "facedir",
+	tiles = {'moreblocks_coal_stone.png'},
+	paramtype  = 'light',
+	paramtype2 = 'facedir',
 	groups = {cracky=2},
 	-- the nodebox model comes from realtest
 	node_box = {
-		type = "fixed",
+		type = 'fixed',
 		fixed = {
 			{-0.5,-0.5,-0.3,0.5,-0.4,0.3},
 			{-0.35,-0.4,-0.25,0.35,-0.3,0.25},
@@ -108,7 +108,7 @@ minetest.register_node("cottages:anvil", {
 		},
 	},
 	selection_box = {
-		type = "fixed",
+		type = 'fixed',
 		fixed = {
 			{-0.5,-0.5,-0.3,0.5,-0.4,0.3},
 			{-0.35,-0.4,-0.25,0.35,-0.3,0.25},
@@ -119,34 +119,34 @@ minetest.register_node("cottages:anvil", {
 
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos);
-		meta:set_string("infotext", 'Anvil');
+		meta:set_string('infotext', 'Anvil');
 		local inv = meta:get_inventory();
-		inv:set_size("input",    1);
-		-- inv:set_size("material", 9);
-		-- inv:set_size("sample",   1);
-		inv:set_size("hammer",   1);
+		inv:set_size('input',    1);
+		-- inv:set_size('material', 9);
+		-- inv:set_size('sample',   1);
+		inv:set_size('hammer',   1);
 	end,
 
 	after_place_node = function(pos, placer)
 		local meta = minetest.get_meta(pos)
-		meta:set_string("owner", placer:get_player_name() or "")
-		meta:set_string("infotext", ('Anvil (owned by %s)'):format((meta:get_string("owner") or "")) )
-		meta:set_string("formspec",
-			"size[8,8]"..
-			--"image[7,3;1,1;cottages_tool_steelhammer.png]"..
-			--"list[current_name;sample;0,0.5;1,1;]"..
-			"list[current_name;input;2.5,1.5;1,1;]"..
-			--"list[current_name;material;5,0;3,3;]"..
-			"list[current_name;hammer;5,3;1,1;]"..
-			--"label[0.0,0.0;Sample:]"..
-			"label[2.5,1.0;Workpiece:]"..
-			"label[6.0,2.7;Optional storage]"..
-			"label[6.0,3.0;for your hammer]"..
-			"label[0,-0.5;Anvil]"..
-			"label[2.5,-0.5;"..("Owner: %s"):format(meta:get_string('owner') or "").."]"..
-			"label[0,3.0;Punch anvil with hammer to]"..
-			"label[0,3.3;repair tool in workpiece-slot.]"..
-			"list[current_player;main;0,4;8,4;]");
+		meta:set_string('owner', placer:get_player_name() or '')
+		meta:set_string('infotext', ('Anvil (owned by %s)'):format((meta:get_string('owner') or '')) )
+		meta:set_string('formspec',
+			'size[8,8]'..
+			--'image[7,3;1,1;cottages_tool_steelhammer.png]'..
+			--'list[current_name;sample;0,0.5;1,1;]'..
+			'list[current_name;input;2.5,1.5;1,1;]'..
+			--'list[current_name;material;5,0;3,3;]'..
+			'list[current_name;hammer;5,3;1,1;]'..
+			--'label[0.0,0.0;Sample:]'..
+			'label[2.5,1.0;Workpiece:]'..
+			'label[6.0,2.7;Optional storage]'..
+			'label[6.0,3.0;for your hammer]'..
+			'label[0,-0.5;Anvil]'..
+			'label[2.5,-0.5;'..('Owner: %s'):format(meta:get_string('owner') or '')..']'..
+			'label[0,3.0;Punch anvil with hammer to]'..
+			'label[0,3.3;repair tool in workpiece-slot.]'..
+			'list[current_player;main;0,4;8,4;]');
 	end,
 
 	can_dig = function(pos,player)
@@ -154,10 +154,10 @@ minetest.register_node("cottages:anvil", {
 		local inv   = meta:get_inventory();
 		local owner = meta:get_string('owner');
 
-		if(  not( inv:is_empty("input"))
-			-- or not( inv:is_empty("material"))
-			-- or not( inv:is_empty("sample"))
-			or not( inv:is_empty("hammer"))
+		if(  not( inv:is_empty('input'))
+			-- or not( inv:is_empty('material'))
+			-- or not( inv:is_empty('sample'))
+			or not( inv:is_empty('hammer'))
 			or not( player )
 			or ( owner and owner ~= '' and player:get_player_name() ~= owner )) then
 			return false;
@@ -250,7 +250,7 @@ minetest.register_node("cottages:anvil", {
 		-- do the actual repair
 		input:add_wear( HAMMERS[tool].repair );
 		--print('rep: '..HAMMERS[tool].repair)
-		inv:set_stack("input", 1, input)
+		inv:set_stack('input', 1, input)
 
 		-- tell the player when the job is done
 		local wear = input:get_wear()
