@@ -6,13 +6,17 @@
 local load_time_start = os.clock()
 cottages = {}
 
-dofile(minetest.get_modpath('cottages')..'/nodes_furniture.lua');
-dofile(minetest.get_modpath('cottages')..'/nodes_historic.lua');
-dofile(minetest.get_modpath('cottages')..'/nodes_straw.lua');
-dofile(minetest.get_modpath('cottages')..'/nodes_anvil.lua');
-dofile(minetest.get_modpath('cottages')..'/nodes_doorlike.lua');
-dofile(minetest.get_modpath('cottages')..'/nodes_fences.lua');
-dofile(minetest.get_modpath('cottages')..'/nodes_roof.lua');
-dofile(minetest.get_modpath('cottages')..'/nodes_barrel.lua');
+local modpath = minetest.get_modpath('cottages')
+dofile(modpath..'/nodes_furniture.lua')
+dofile(modpath..'/nodes_historic.lua')
+dofile(modpath..'/nodes_straw.lua')
+dofile(modpath..'/nodes_anvil.lua')
+dofile(modpath..'/nodes_doorlike.lua')
+dofile(modpath..'/nodes_fences.lua')
+dofile(modpath..'/nodes_roof.lua')
+dofile(modpath..'/nodes_barrel.lua')
 
-print(string.format('[cottages] loaded after ca. %.3fs', os.clock() - load_time_start))
+if minetest.setting_get("log_mods") then
+	minetest.log('action', string.format('['..minetest.get_current_modname()..']'..
+			' loaded in %.3fs', os.clock() - load_time_start))
+end
