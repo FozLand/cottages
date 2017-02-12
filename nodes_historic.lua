@@ -43,7 +43,7 @@ core.register_node("cottages:feldweg", {
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
 	legacy_facedir_simple = true,
 	groups = {crumbly=3},
-	sounds = default.node_sound_dirt_defaults,
+	sounds = default.node_sound_dirt_defaults(),
 	is_ground_content = false,
 })
 
@@ -53,7 +53,7 @@ core.register_node("cottages:loam", {
 	description = 'Loam',
 	tiles = {"cottages_loam.png"},
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,crumbly=3},
-	sounds = default.node_sound_dirt_defaults,
+	sounds = default.node_sound_dirt_defaults(),
 	is_ground_content = false,
 })
 
@@ -81,7 +81,7 @@ core.register_node("cottages:straw_ground", {
 	description = 'Straw ground for animals',
 	tiles = {"cottages_darkage_straw.png","cottages_loam.png","cottages_loam.png","cottages_loam.png","cottages_loam.png","cottages_loam.png"},
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,crumbly=3},
-	sounds = default.node_sound_dirt_defaults,
+	sounds = default.node_sound_dirt_defaults(),
 	is_ground_content = false,
 })
 
