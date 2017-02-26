@@ -5,6 +5,7 @@ read_globals = {
 	'minetest', 'core',
 	'vector',
 	'default',
+	'ItemStack',
 }
 
 globals = {
